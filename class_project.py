@@ -9,7 +9,7 @@ host="http://api.openweathermap.org/data/2.5/weather?"
 print('\nWelcome to Python Weather Services!')
 
 def zip_funct():
-   #zip code funtion for when user wantes to search by zip code 
+   # zip code funtion for when user wantes to search by zip code 
     u_zip=input('Enter a U.S. valid Zip Code: ') 
     print('\nConnecting...')
     full_url=f'{host}q={u_zip},us&appid={key}&units=imperial' #the full url address for the request module using zip code
@@ -17,31 +17,31 @@ def zip_funct():
     data=returned.json() #nested dictionary that contains data values to be printed from the response object
 
     if data["cod"] != "404": 
-        #Checks for successful connection
+        # Checks for successful connection
         print(f"Connected to weather services for zip code: {u_zip}.")
         print_funct(data)
         ask_to_continue()
     else:
-        print_funct(data) #if 404 is found, runs print function to check for "key error" that will run the except code in the try block located in main()
+        print_funct(data) # if 404 is found, runs print function to check for "key error" that will run the except block located in main()
 
 def city_funct():
-    #City funtion for when user wantes to search by city 
+    # City funtion for when user wantes to search by city 
     u_city=input('Enter city name: ').title() 
     print('\nConnecting...')
     full_url=f'{host}q={u_city}&appid={key}&units=imperial' # the full url address for the request module using city
-    returned=requests.get(full_url) #returns a response object  
-    data=returned.json() #nested dictionary that contains data values to be printed from the response object
+    returned=requests.get(full_url) # returns a response object  
+    data=returned.json() # nested dictionary that contains data values to be printed from the response object
 
     if data["cod"] != "404": 
-        #Checks for successful connection
+        # Checks for successful connection
         print(f"\nConnected to {u_city} weather services! ")
         print_funct(data)
         ask_to_continue()
     else:
-        print_funct(data) #if 404 is found, runs print function to check for "key error" that will run the except code in the try block located in main()
+        print_funct(data) # if 404 is found, runs print function to check for "key error" that will run the except block located in main()
      
 def print_funct(data):
-    #takes information stored in data varible and stores them in specific varibles that will be printed
+    # takes information stored in data varible and stores them in specific varibles that will be printed
     description = data['weather'][0]['description']
     print(f'\tDescription: {description.title()}')
 
