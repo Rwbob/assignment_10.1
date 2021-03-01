@@ -45,6 +45,8 @@ def print_funct(data):
     description = data['weather'][0]['description']
     print(f'\tDescription: {description.title()}')
 
+    convert_clouds(data)
+
     temp = data['main']['temp']
     print(f'\tCurrent temprature: {temp} degree fahrenheit')
     
@@ -78,7 +80,39 @@ def ask_to_continue():
             exit()
         else:
             print("\nError! Not a valid option please try again.\n")
-    
+
+def convert_clouds(data):
+    # Converts percentage of clould cover to descriptive value.
+    if data['clouds']['all'] < 10: # 0 - 9%
+        print(f"\tCloud Coverage: {data['clouds']['all']}%")
+        print("\t\tDay: Sunny")
+        print("\t\tNight: Clear")
+
+    elif data['clouds']['all'] < 20: # 10 - 19%
+        print(f"\tCloud Coverage: {data['clouds']['all']}%")
+        print("\t\tDay: Sunny to Mostly Sunny")
+        print("\t\tNight: Fair")
+
+    elif data['clouds']['all'] < 30: # 20 - 29%
+        print(f"\tCloud Coverage: {data['clouds']['all']}%")
+        print("\t\tDay: Mostly Sunny")
+        print("\t\tNight: Mostly Fair")
+
+    elif data['clouds']['all'] < 60: # 30 - 59%
+        print(f"\tCloud Coverage: {data['clouds']['all']}%")
+        print("\t\tDay: Partly Sunny")
+        print("\t\tNight: Partly Cloudy")
+
+    elif data['clouds']['all'] < 90: # 60 - 89% 
+        print(f"\tCloud Coverage: {data['clouds']['all']}%")
+        print("\t\tDay: Mostly Cloudy")
+        print("\t\tNight: Mostly Cloudy")
+
+    elif data['clouds']['all'] >= 90: # 90 - 100% 
+        print(f"\tCloud Coverage: {data['clouds']['all']}%")
+        print("\t\tDay: Cloudy")
+        print("\t\tNight: Cloudy")
+
 # Main function
 def main():
     # Prompts user to search by city or zip code, checks input and runs appropriate function
