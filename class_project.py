@@ -10,9 +10,9 @@ print('\nWelcome to Python Weather Services!')
 
 def zip_funct():
    # zip code funtion for when user wantes to search by zip code 
-    u_zip=input('Enter a U.S. valid Zip Code: ') 
+    u_zip=input('Enter a valid zip code: ') 
     print('\nConnecting...')
-    full_url=f'{host}q={u_zip},us&appid={key}&units=imperial' #the full url address for the request module using zip code
+    full_url=f'{host}q={u_zip}&appid={key}&units=imperial' #the full url address for the request module using zip code
     returned=requests.get(full_url) #returns a response object   
     data=returned.json() #nested dictionary that contains data values to be printed from the response object
 
@@ -35,6 +35,23 @@ def city_funct():
     if data["cod"] != "404": 
         # Checks for successful connection
         print(f"\nConnected to {u_city} weather services! ")
+        print_funct(data)
+        ask_to_continue()
+    else:
+        print_funct(data) # if 404 is found, runs print function to check for "key error" that will run the except block located in main()
+
+def both_funct():
+    # function for a more accurate search result
+    u_both=input("Enter the city name first, followed by the 2-letter country code (example: US for United States), then the zip code; all seperated by a comma: ")
+    print(u_both)
+    print('\nConnecting...')
+    full_url=f'{host}q={u_both}&appid={key}&units=imperial' # the full url address for the request module using city
+    r=requests.get(full_url)
+    data=r.json()
+
+    if data["cod"] != "404": 
+        # Checks for successful connection
+        print(f"\nConnected to {u_both} weather services! ")
         print_funct(data)
         ask_to_continue()
     else:
@@ -120,7 +137,8 @@ def main():
     # errors if city not found
     while True:
         user_selection = input("If you would like to search by city please, type 'city'"
-        " if you perfer to search by zip code type 'zip': ").lower()
+        " if you perfer to search by zip code type 'zip'"
+        "\nfor a comprehensive search type 'both' : ").lower()
         if user_selection == 'city':
             print('\nSearching by city name...')
             try:
@@ -133,6 +151,11 @@ def main():
                 zip_funct()
             except KeyError:
                 print("\n---Error---\nConnention aborted, zip code not found. Please try again.\n")
+        elif user_selection == 'both':
+            try:
+                both_funct()
+            except KeyError:
+                print("\n---Error---\nConnention aborted, city or zip code not found. Please try again.\n")
         else: 
             print("\nERROR! Search option is unavailable please search by 'city' or ' zip'.\n")        
 main()
