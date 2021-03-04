@@ -1,4 +1,8 @@
-
+# A python project that relies on user input and an API to generate weather information 
+# by city, or zip code. Uses the request libary and json. 
+# by: Robert Sivadon
+# for: CIS245 Jordan Moline
+# due: 03-06-2021
 
 import requests, json
 
@@ -42,7 +46,7 @@ def city_funct():
 
 def both_funct():
     # function for a more accurate search result
-    u_both=input("Enter the city name first, followed by the 2-letter country code (example: US for United States), then the zip code; all seperated by a comma: ")
+    u_both=input("\nEnter the city name first, followed by the 2-letter country code (example: US for United States), then the zip code; all seperated by a comma: ")
     print(u_both)
     print('\nConnecting...')
     full_url=f'{host}q={u_both}&appid={key}&units=imperial' # the full url address for the request module using city
